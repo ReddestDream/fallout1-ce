@@ -135,6 +135,17 @@ bool svga_init(VideoOptions* video_options)
     }
 
     SDL_SetPaletteColors(gSdlSurface->format->palette, colors, 0, 256);
+    
+    // macOS seems to require dequeuing NSApp events in order for window to
+    // become visible. There is no concrete number of calls required to make	
+    // it happen. Sadly there is no particular event to watch for because SDL
+    // marks window as shown immediately after creation (see	
+    // `SDL_FinishWindowCreation`).
+		
+    for (int i = 0; i < 10; i++) {
+		
+        SDL_PumpEvents();
+    }
 
     scr_size.ulx = 0;
     scr_size.uly = 0;

@@ -180,6 +180,13 @@ int game_init(const char* windowTitle, bool isMapper, int font, int flags, int a
     initWindow(&video_options, flags);
     palette_init();
 
+    if (_init_options_menu() != 0) {
+    debugPrint("Failed on init_options_menu\n");
+    return -1;
+    }
+
+    debugPrint(">init_options_menu\n");
+
     if (!game_in_mapper) {
         game_splash_screen();
     }
